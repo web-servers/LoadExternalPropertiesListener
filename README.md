@@ -41,3 +41,38 @@ Controls if previously defined system properties may be ovewritten. The default 
 
 Determines if any specified external files will be loaded before the rest of <code>server.xml</code>. The default is <code>false</code>,
 indicating that the contents of <code>server.xml</code> will be loaded and procesed before external files.
+
+# example
+1. Configure the following in server.xml:
+```xml
+
+
+<Listener className="org.apache.catalina.core.LoadExternalPropertiesListener
+   file.0="${catalina.base}/conf/test0.properties"
+   file.1="${catalina.base}/conf/test1.properties"
+   overwrite="true" loadFirst="true"/>
+
+...
+
+    <Connector port="${tomcat.http.port}" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" />
+
+    <Connector port="${tomcat.ajp.port}" protocol="AJP/1.3" redirectPort="8443" />
+
+```
+2. Add the following to conf/catalina.properties:
+```
+org.apache.tomcat.util.digester.REPLACE_SYSTEM_PROPERTIES=true
+my.http.port=8081
+```
+3. Add the following to conf/test0.properties:
+```
+my.ajp.port=8010
+```
+4. Add the following to conf/test1.properties:
+```
+tomcat.http.port=${my.http.port}
+tomcat.ajp.port=${my.ajp.port}
+```
+5. Test tomcat it should run AJP on 8010 and HTTP/1.1 on 8081
