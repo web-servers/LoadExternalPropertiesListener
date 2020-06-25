@@ -64,15 +64,15 @@ indicating that the contents of <code>server.xml</code> will be loaded and proce
 2. Add the following to conf/catalina.properties:
 ```
 org.apache.tomcat.util.digester.REPLACE_SYSTEM_PROPERTIES=true
-my.http.port=8081
+tomcat.http.port=8081
 ```
 3. Add the following to conf/test0.properties:
 ```
-my.ajp.port=8010
+tomcat.ajp.port=8010
 ```
 4. Add the following to conf/test1.properties:
 ```
-tomcat.http.port=${my.http.port}
-tomcat.ajp.port=${my.ajp.port}
+tomcat.http.port=8082
+tomcat.ajp.port=8011
 ```
-5. Test tomcat it should run AJP on 8010 and HTTP/1.1 on 8081
+5. Test tomcat it should run AJP on 8011 and HTTP/1.1 on 8082
