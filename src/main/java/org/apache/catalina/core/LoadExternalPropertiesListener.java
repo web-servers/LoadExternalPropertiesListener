@@ -35,9 +35,10 @@ import org.apache.catalina.LifecycleListener;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.apache.tomcat.util.digester.Digester;
+import org.apache.tomcat.util.digester.SetPropertiesRule;
 
 
-public class LoadExternalPropertiesListener implements LifecycleListener {
+public class LoadExternalPropertiesListener implements LifecycleListener, SetPropertiesRule.Listener {
 
     private static final Log log = LogFactory.getLog(LoadExternalPropertiesListener.class);
 
@@ -93,9 +94,6 @@ public class LoadExternalPropertiesListener implements LifecycleListener {
     }
 
     public boolean setProperty(String name, String value) {
-        if (name.equals("done")) {
-            loadProperties();
-        }
         if (!name.startsWith("file.")) {
             return false;
         }
@@ -105,6 +103,13 @@ public class LoadExternalPropertiesListener implements LifecycleListener {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void endSetPropertiesRule() {
+        if (loadFirst) {
+            loadProperties();
+        }
     }
 
     /**
