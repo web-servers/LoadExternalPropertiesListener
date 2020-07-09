@@ -47,7 +47,7 @@ indicating that the contents of <code>server.xml</code> will be loaded and proce
 ```xml
 
 
-<Listener className="org.apache.catalina.core.LoadExternalPropertiesListener
+<Listener className="org.apache.catalina.core.LoadExternalPropertiesListener"
    file.0="${catalina.base}/conf/test0.properties"
    file.1="${catalina.base}/conf/test1.properties"
    overwrite="true" loadFirst="true"/>
